@@ -30,10 +30,16 @@ func main() {
 	e := echo.New()
 	e.Use(middleware.Logger())
 
+	e.Static("/static", "lib")
+
 	count := Count{Count: 0}
 	e.Renderer = NewTemplate()
 
 	e.GET("/", func(c echo.Context) error {
+		return c.Render(200, "index", count)
+	})
+
+	e.POST("/count", func(c echo.Context) error {
 		count.Count++
 		return c.Render(200, "index", count)
 	})
