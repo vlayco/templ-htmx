@@ -30,7 +30,7 @@ func main() {
 	e := echo.New()
 	e.Use(middleware.Logger())
 
-	e.Static("/static", "lib")
+	e.Static("/static", "static")
 
 	count := Count{Count: 0}
 	e.Renderer = NewTemplate()

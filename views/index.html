@@ -19,13 +19,13 @@
 			content="width=device-width, initial-scale=1" />
 		<link
 			rel="stylesheet"
-			href="" />
+			href="/static/css/styles.css" />
 		<script
-			src="/static/htmx.min.js"
+			src="/static/js/htmx.min.js"
 			async
 			defer></script>
 	</head>
-	<body>
+	<body class="container mx-auto px-8 min-h-screen bg-teal-100">
 		<!--[if lt IE 7]>
 			<p class="browsehappy">
 				You are using an <strong>outdated</strong> browser. Please
@@ -33,12 +33,31 @@
 			</p>
 		<![endif]-->
 
-		<div id="count">{{ template "count" . }}</div>
-		<button
-			hx-target="#count"
-			hx-post="/count">
-			Count
-		</button>
+		{{ template "form" . }}
 	</body>
 </html>
-{{ end }} {{ block "count" . }} Count {{ .Count }} {{ end }}
+{{ end }} {{ block "form" . }}
+<form
+	action=""
+	class="bg-blue-100">
+	Name:
+	<input
+		type="text"
+		name="name" />
+	Email:
+	<input
+		type="text"
+		name="email" />
+</form>
+{{ end }} {{ block "display" . }}
+<div>
+	{{ range .Contacts }}
+	<div>
+		Name:
+		<span> Name: {{ .Name }} </span>
+		Email:
+		<span> Email: {{ .Email }} </span>
+	</div>
+	{{ end }}
+</div>
+{{ end }}
