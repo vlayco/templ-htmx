@@ -1,2 +1,3 @@
 # templ-htmx
-Simple example using of HTMX in Go app.
+
+Simple example of usage of HTMX in Golang app with native templating engine, and TailwindCSS for stylization.
