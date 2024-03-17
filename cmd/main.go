@@ -30,7 +30,13 @@ func main() {
 	e := echo.New()
 	e.Use(middleware.Logger())
 
-	e.Static("/static", "static")
+	// e.Static("/static", "static")
+
+	e.Use(middleware.StaticWithConfig(middleware.StaticConfig{
+		HTML5:  true,
+		Root:   "/static",
+		Browse: true,
+	}))
 
 	count := Count{Count: 0}
 	e.Renderer = NewTemplate()
