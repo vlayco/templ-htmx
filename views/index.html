@@ -20,6 +20,9 @@
 		<link
 			rel="stylesheet"
 			href="/static/css/styles.css" />
+		<link
+			rel="stylesheet"
+			href="/static/css/for-htmx.css" />
 		<script
 			src="/static/js/htmx.min.js"
 			async
@@ -85,12 +88,40 @@
 <div
 	class="flex flex-col space-y-3"
 	id="contacts">
-	{{ range .Contacts }}
+	{{ range .Contacts }} {{ template "contact" . }} {{ end }}
+</div>
+{{ end }} {{ block "contact" . }}
+<div
+	id="contact-{{ .Id }}"
+	class="contact flex flex-row space-x-2 items-center justify-center bg-blue-100">
 	<div
-		class="flex flex-col space-y-1 border-[1px] border-slate-400 rounded-md p-4">
+		class="flex flex-col space-y-1 border-[1px] border-slate-400 rounded-md p-4 w-full">
 		<span> Name: {{ .Name }} </span>
 		<span> Email: {{ .Email }} </span>
+
+		<div
+			id="ci-{{ .Id }}"
+			class="htmx-indicator">
+			<img
+				src="static/images/bars.svg"
+				alt="loading" />
+		</div>
 	</div>
-	{{ end }}
+	<a
+		hx-indicator="#ci-{{ .Id }}"
+		hx-target="#contact-{{ .Id }}"
+		hx-swap="outerHTML swap:500ms"
+		hx-delete="/contacts/{{ .Id }}"
+		href=""
+		class="font-bold text-xl px-2 cursor-pointer"
+		>X</a
+	>
+</div>
+{{ end }} {{ block "oob-contact" . }}
+<div
+	id="contacts"
+	hx-swap-oob="afterbegin"
+	class="flex flex-col space-y-1 border-[1px] border-slate-400 rounded-md p-4">
+	{{ template "contact" . }}
 </div>
 {{ end }}
